@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071b3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="VJBL U16 Map">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  <title>VJBL U16 Girls Grading Map</title>
+  <style>
+    * { box-sizing: border-box }
+    html, body { width:100%; height:100%; margin:0; background:#071b3b; overflow:hidden }
+    body { padding-top:env(safe-area-inset-top); padding-bottom:env(safe-area-inset-bottom) }
+    iframe { display:block; width:100%; height:100%; border:0; background:#fff }
+  </style>
+</head>
+<body>
+  <iframe src="https://vjbl-u16-grading-map-2026-27.mattpgardiner.chatgpt.site/" title="VJBL U16 Girls Grading Map" allow="clipboard-read; clipboard-write"></iframe>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js', {scope:'./'}).then(reg => {
+        reg.update();
+        reg.addEventListener('updatefound', () => {
+          const next = reg.installing;
+          if (next) next.addEventListener('statechange', () => { if (next.state === 'installed' && navigator.serviceWorker.controller) next.postMessage('activate'); });
+        });
+      }).catch(() => {});
+      let refreshed = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => { if (!refreshed) { refreshed = true; location.reload(); } });
+      window.addEventListener('pageshow', () => navigator.serviceWorker.getRegistration('./').then(reg => reg && reg.update()));
+    }
+  </script>
+</body>
+</html>
